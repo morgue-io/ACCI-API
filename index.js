@@ -2,6 +2,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const buildPDF = require('./compile-pdf');
 
 const ImageKit = require('imagekit');
 require('dotenv').config();
@@ -49,9 +50,18 @@ app.post('/imagekitify', async function (req, res) {
 });
 
 app.post('/new-submission', async function (req, res) {
-    console.log(req.body);
-    let r = await createNewSubmission(client, { ...req.body, createdAt: new Date().toUTCString() });
-    res.json(r);
+    try {
+        console.log(req.body);
+        await createNewSubmission(client, { ...req.body, createdAt: new Date().toUTCString() });
+        const path = await buildPDF(req.body);
+        res.sendFile(path);
+        fs.unlink(path, (err) => { if (err) throw err; });
+    } catch (e) {
+        res.json({
+            success: false,
+            msg: e
+        });
+    }
 });
 
 app.listen(parseInt(process.env.PORT), function () {
