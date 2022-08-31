@@ -37,7 +37,7 @@ module.exports = async function (form) {
         font: courierFont,
     });
 
-    firstPage.drawText(form.contact_no  || 'N / A', {
+    firstPage.drawText(form.contact_number  || 'N / A', {
         x: 185,
         y: 552,
         size: 10,
