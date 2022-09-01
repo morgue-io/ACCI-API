@@ -1,10 +1,12 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const express = require('express');
+const fs = require('fs');
 const app = express();
 const cors = require('cors');
 const buildPDF = require('./compile-pdf');
 
 const ImageKit = require('imagekit');
+const { resolve } = require('path');
 require('dotenv').config();
 
 app.use(express.json({limit: '25mb'}));
@@ -53,8 +55,8 @@ app.post('/new-submission', async function (req, res) {
     try {
         console.log(req.body);
         await createNewSubmission(client, { ...req.body, createdAt: new Date().toUTCString() });
-        const path = await buildPDF(req.body);
-        res.sendFile(path);
+        const fileName = await buildPDF(req.body);
+        res.download(resolve(`./${fileName}`));
         fs.unlink(path, (err) => { if (err) throw err; });
     } catch (e) {
         res.json({
