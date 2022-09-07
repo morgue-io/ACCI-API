@@ -7,7 +7,10 @@ const ImageKit = require('imagekit');
 require('dotenv').config();
 
 app.use(express.json({limit: '25mb'}));
-app.use(cors());
+app.use(cors({
+    origin: "*",
+    credentials: true,
+}));
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
