@@ -51,6 +51,6 @@ app.post('/new-submission', async function (req, res) {
     res.json(r);
 });
 
-app.listen(3001, function () {
-    console.log('Live at Port 3001');
+app.listen(parseInt(process.env.PORT), function () {
+    console.log(`Live at Port ${PORT}`);
 });
