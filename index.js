@@ -29,6 +29,12 @@ const imagekit = new ImageKit({
     privateKey: process.env.IK_PRIVATE_KEY
 });
 
+app.get('/', async function (req, res) {
+    res.json({
+        msg: "Welcome to ACCI API server"
+    });
+});
+
 app.post('/imagekitify', async function (req, res) {
     imagekit.upload({
         file: req.body.base64,
