@@ -56,7 +56,7 @@ app.post('/new-submission', async function (req, res) {
         console.log(req.body);
         await createNewSubmission(client, { ...req.body, createdAt: new Date().toUTCString() });
         const fileName = await buildPDF(req.body);
-        res.download(resolve(`./${fileName}`));
+        await res.download(resolve(`./${fileName}`));
         fs.unlink(path, (err) => { if (err) throw err; });
     } catch (e) {
         res.json({
