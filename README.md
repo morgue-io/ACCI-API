@@ -1,2 +1,2 @@
 # ACCI-API
-Backend API for ACCI website
+Form API for the ACCI form generator
