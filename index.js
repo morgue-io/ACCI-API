@@ -6,7 +6,6 @@ const cors = require('cors');
 const buildPDF = require('./compile-pdf');
 
 const ImageKit = require('imagekit');
-const { resolve } = require('path');
 require('dotenv').config();
 
 app.use(express.json({limit: '25mb'}));
@@ -56,8 +55,9 @@ app.post('/new-submission', async function (req, res) {
         console.log(req.body);
         await createNewSubmission(client, { ...req.body, createdAt: new Date().toUTCString() });
         const fileName = await buildPDF(req.body);
-        await res.download(resolve(`./${fileName}`));
-        // fs.unlink(path, (err) => { if (err) throw err; });
+        res.download(fileName, fileName, function (_) {
+            fs.unlink(`./${fileName}`, function (_) {});
+        });
     } catch (e) {
         res.json({
             success: false,
