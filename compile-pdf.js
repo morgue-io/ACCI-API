@@ -72,7 +72,7 @@ module.exports = async function (form) {
         font: courierFont,
     });
 
-    firstPage.drawText(form.applicant_designation || 'kya bhai', {
+    firstPage.drawText((form.applicant_designation === 'others' ? form.applicant_designation_specification : form.applicant_designation) || 'N / A', {
         x: 185,
         y: 422,
         size: 10,
@@ -107,7 +107,7 @@ module.exports = async function (form) {
         font: courierFont,
     });
 
-    firstPage.drawText(form.nm_designation  || 'N / A', {
+    firstPage.drawText((form.nm_designation === 'others' ? form.nm_designation_specification : form.nm_designation) || 'N / A', {
         x: 185,
         y: 279,
         size: 10,
