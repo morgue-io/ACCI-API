@@ -1,4 +1,5 @@
-var { degrees, PDFDocument, rgb, StandardFonts } = require('pdf-lib');
+var { PDFDocument, StandardFonts } = require('pdf-lib');
+const axios = require('axios');
 const fs = require('fs/promises');
 const crypto = require('crypto');
 
@@ -11,11 +12,22 @@ module.exports = async function (form) {
 
     // Get the first page of the document
     const firstPage = pdfDoc.getPages()[0];
+    
+    // Draw elements
+    const drawPFP = async () => {
+        let image = await axios.get(form.photo_of_applicant, { responseType: 'arraybuffer' });
+        const buffer = Buffer.from(image.data).toString('base64');
+        const jpgImage = await pdfDoc.embedJpg(buffer);
+        const scaledJpg = jpgImage.scale(90 / (jpgImage.width >= jpgImage.height ? jpgImage.width : jpgImage.height));
+        firstPage.drawImage(jpgImage, {
+            x: 414 + scaledJpg.width / 2,
+            y: 765 - scaledJpg.height / 2,
+            width: scaledJpg.width,
+            height: scaledJpg.height,
+        });
+        console.log(firstPage.getHeight(), firstPage.getWidth())
+    }; await drawPFP();
 
-    // Get the width and height of the first page
-    const { width, height } = firstPage.getSize();
-
-    // Draw a string of text diagonally across the first page
     firstPage.drawText((form.membership_type  || 'N / A'), {
         x: 185,
         y: 630,
