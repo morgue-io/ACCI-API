@@ -42,21 +42,21 @@ module.exports = async function (form) {
         font: courierFont,
     });
 
-    firstPage.drawText(form.address  || 'N / A', {
+    firstPage.drawText(form.company_address  || 'N / A', {
         x: 185,
         y: 578,
         size: 10,
         font: courierFont,
     });
 
-    firstPage.drawText(form.contact_number  || 'N / A', {
+    firstPage.drawText(form.company_phones  || 'N / A', {
         x: 185,
         y: 552,
         size: 10,
         font: courierFont,
     });
 
-    firstPage.drawText(form.email_id  || 'N / A', {
+    firstPage.drawText(form.company_email  || 'N / A', {
         x: 185,
         y: 526,
         size: 10,
@@ -77,21 +77,21 @@ module.exports = async function (form) {
         font: courierFont,
     });
 
-    firstPage.drawText(form.name_of_applicant  || 'N / A', {
+    firstPage.drawText(`${form.name_of_applicant} (${form.applicant_gender}) (${form.applicant_designation === 'others' ? form.applicant_designation_specification : form.applicant_designation})`  || 'N / A', {
         x: 185,
         y: 448,
         size: 10,
         font: courierFont,
     });
 
-    firstPage.drawText((form.applicant_designation === 'others' ? form.applicant_designation_specification : form.applicant_designation) || 'N / A', {
+    firstPage.drawText(form.applicant_contact_number || 'N / A', {
         x: 185,
         y: 422,
         size: 10,
         font: courierFont,
     });
 
-    firstPage.drawText(form.aadhaar_number  || 'N / A', {
+    firstPage.drawText(form.applicant_aadhaar_number  || 'N / A', {
         x: 185,
         y: 396,
         size: 10,
@@ -140,21 +140,21 @@ module.exports = async function (form) {
         font: courierFont,
     });
 
-    firstPage.drawText(form.payment_details  || 'N / A', {
+    firstPage.drawText(form.cash_cheque_dd_no  || 'N / A', {
         x: 185,
         y: 202,
         size: 10,
         font: courierFont,
     });
 
-    firstPage.drawText(form.proposed_by  || 'N / A', {
+    firstPage.drawText(form.cash_cheque_dd_date  || 'N / A', {
         x: 185,
         y: 176,
         size: 10,
         font: courierFont,
     });
 
-    firstPage.drawText(form.proposed_by_id  || 'N / A', {
+    firstPage.drawText(`${form.proposed_by} (${form.proposed_by_id})`  || 'N / A', {
         x: 185,
         y: 150,
         size: 10,
